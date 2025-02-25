@@ -167,3 +167,25 @@ def run(gt_param, beta, gamma, task, Q_x, Q_param, P_x, P_param, R_x, N, windows
                 tbar.set_postfix(param =  (reverse_map(post_states[-1][-2]), reverse_map(post_states[-1][-1])))
     np.save(full_path, post_states)
     np.save(full_path+'_before', prior_states)
+
+if __name__ == '__main__':
+    beta_t = 0.002
+    gamma_t = 0.001
+    Is = 0.002
+    for type in ['er','ba','ws']:
+        if type == 'er':
+            for p_e in [0.002, 0.02, 0.04, 0.06]:
+                graph_para = {'type':'er','p_e': p_e, 'p_w':0.1, 'd':5, 'm': 5,  'n_nodes': 5000}
+                g = nx.random_graphs.erdos_renyi_graph(5000, p_e) # 生成网络
+                n_nodes = 5000
+                model = ep.SIRModel(g)
+                cfg = mc.Configuration()
+                cfg.add_model_parameter('beta', beta_t)
+                cfg.add_model_parameter('gamma', gamma_t)
+                cfg.add_model_parameter("fraction_infected", Is) # 用模拟值做初始感染率
+                model.set_initial_status(cfg)
+                iterations = model.iteration_bunch(bunch_size=3000)
+                trends = model.build_trends(iterations)
+                save_obj(trends, './datasets/scen3_data/beta_{}gamma_{}p_{}type{}'.format(beta_t, gamma_t,p_e,type))
+                gt_param = {'graph_para': graph_para, 'Is':0.002, 'beta_gt':beta_t, 'gamma_gt':gamma_t, 'gts': trends, 'n_nodes':5000, 'save_dir':'./datasets/scen3_data/res_1209-10'}
+                run(gt_param, beta = 0.01, gamma=0.01, task = "all", Q_x = 1e-4, Q_param = 1e-4, P_x = 5e-4, P_param = 1e-2, R_x= 5e-3, N = 50, windows = 10, rounds =3000, measurement_mode='both', name="{}{}{}{}".format(type, p_e,beta_t, gamma_t))

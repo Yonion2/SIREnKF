@@ -159,11 +159,12 @@ def run(gt_param, beta, gamma, task, Q_x, Q_param, P_x, P_param, R_x, N, windows
     ## 应该加上生成图片的模块
     
 if __name__ == '__main__':
-    path = r"C:\Users\xinji\Documents\理论论文\卡尔曼滤波\paper_code\scen2\scen2_data\netwwork\p2p-Gnutella05.txt"
+    m = 6
+    path = "./datasets/graphs/p2p-Gnutella05.txt"
     def read_txt_direct(data):
         g = nx.read_edgelist(data,  nodetype=int, create_using=nx.DiGraph())
         return g
-    g = nx.random_graphs.erdos_renyi_graph(8846, 0.0005)
+    g = read_txt_direct(path)
     # trends = load_obj(r"C:\Users\xinji\Documents\理论论文\卡尔曼滤波\paper_code\scen2\scen2_data\trends")
     # gt_param = {'graph': g, 'Is':0.002, 'beta_gt':0.006, 'gamma_gt':0.003, 'gts': trends, 'n_nodes':8846, 'save_dir':'./scen2_data/res/'}
     # run(gt_param = gt_param, beta=0.01, gamma=0.01, task='all', Q_x = 1e-4, Q_param = 1e-4, P_x = 5e-4, P_param = 1e-2, R_x= 5e-3, N = 50, windows = 10, rounds = 3000, measurement_mode='both',name = '5')
@@ -183,6 +184,6 @@ if __name__ == '__main__':
     model.set_initial_status(cfg)
     iterations = model.iteration_bunch(bunch_size=3000)
     trends = model.build_trends(iterations)
-    save_obj(trends, './scen2/scen2_data/beta_{}gamma_{}er8846trends'.format(beta, gamma))
-    gt_param = {'graph': g, 'Is':0.002, 'beta_gt':beta, 'gamma_gt':gamma, 'gts': trends, 'n_nodes':8846, 'save_dir':'./scen2_data/res/'}
+    save_obj(trends, './datasets/scen2_data/beta_{}gamma_{}er8846trends'.format(beta, gamma))
+    gt_param = {'graph': g, 'Is':0.002, 'beta_gt':beta, 'gamma_gt':gamma, 'gts': trends, 'n_nodes':8846, 'save_dir':'./datasets/scen2_data/'}
     run(gt_param = gt_param, beta=0.01, gamma=0.01, task='all', Q_x = 1e-4, Q_param = 1e-4, P_x = 5e-4, P_param = 1e-2, R_x= 5e-3, N = 50, windows = 10, rounds = 3000, measurement_mode='both', name = 'er8846')

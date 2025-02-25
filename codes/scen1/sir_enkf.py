@@ -173,5 +173,5 @@ if __name__ == '__main__':
     g = read_txt_direct(path)
     trends = load_obj("./datasets/scen1_data/obe/trends_addedd_50beta0.005_gamma0.002_fraction0.002")
     graph_params = {'type':'scenario1','p': 0.005, 'wk': 5, 'wp': 0.001, 'd':50, 'n_nodes': 8846, 'm':m}
-    gt_param = {'graph': g, 'beta_gt':0.005, 'gamma_gt':0.002, 'Is':0.002, 'gts': trends, 'n_nodes':8846, 'save_dir':'./paper_data/case1/result'}
+    gt_param = {'graph': g, 'beta_gt':0.005, 'gamma_gt':0.002, 'Is':0.002, 'gts': trends, 'n_nodes':8846, 'save_dir':'./datasets/scen1_data/res_1209-10'}
     run(gt_param, beta = 0.01, gamma = 0.01, task= 'both', Q_x = 1e-4, Q_param = 1e-4, P_x = 5e-4, P_param = 1e-2, R_x= 5e-3, N = 50, windows = 10, rounds = 3000, measurement_mode='both')
