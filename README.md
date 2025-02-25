@@ -1,25 +1,25 @@
 # SIR on Networks
 
-> 基于社交网络的SIR模型数据同化
+> Data assimilation of the SIR model based on social networks
 
-已知社交网络结构，观测节点感染个数，通过EnKF算法估计SIR模型的参数beta and/or gamma.
+Given the structure of a social network and the observed number of infected nodes, the parameters of the SIR model, such as \( \beta \) and/or \( \gamma \), can be estimated using the Ensemble Kalman Filter (EnKF) algorithm.
 
-[//]: # (![]&#40;https://github.com/dbader/readme-template/raw/master/header.png&#41;)
 
-## Installation
+## Installation Guide for Python 3
+To run the code, you need to install the ndlib and filterpy packages. These are essential for network diffusion simulations and filtering algorithms, respectively. Additional packages can be installed as needed.
 
-基于Python3
-主要注意安装`ndlib`和`filterpy`包，其余包按需安装。
+## Code Description
+- `codes/scen1`:the codes in Scenario 1, the core code is **sir_enkf.py**
+- `codes/scen2`: the codes in Scenario 2, the core code is **hda_main.py**
+- `codes/scen3`: the codes in Scenario 2,  the core code is **enkf_diffnet.py**
+- `codes/scen*/EnKF_delta_*.py`: the EnKF algorithm, the primary difference lies in the distinct methods used to correct the state under various scenarios.
+- `codes/scen1/origsir.py`: the original SIR model
+- `codes/scen1/particle_filter.py`: particle filter
 
-## 代码说明
-- `codes/scen1`: 场景1的代码
-- `codes/scen2`: 场景2的代码
-- `codes/scen3`: 场景3的代码
-- `codes/scen*/EnKF_delta_*.py`: EnKF算法部分，主要区别在于不同场景下修正状态方法不同
-- `codes/scen1/origsir.py`: 原始sir算法部分
-- `codes/scen1/particle_filter.py`: 粒子滤波部分
-
-## 数据集说明
-- `datasets/graph/`: 社交网络，gnutella p2p网络
+## Datasets Description
+- `datasets/graph/`: gnutella p2p network
+- `datasets/scene1_data/`: the results in Scenario 1
+- `datasets/scene2_data/`: the results in Scenario 2
+- `datasets/scene3_data/`: the results in Scenario 3
 
   
