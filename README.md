@@ -18,8 +18,8 @@ To run the code, you need to install the ndlib and filterpy packages. These are 
 
 ## Datasets Description
 - `datasets/graph/`: gnutella p2p network
-- `datasets/scene1_data/`: the results in Scenario 1
-- `datasets/scene2_data/`: the results in Scenario 2
-- `datasets/scene3_data/`: the results in Scenario 3
+- `datasets/scen1_data/`: the results in Scenario 1
+- `datasets/scen2_data/`: the results in Scenario 2
+- `datasets/scen3_data/`: the results in Scenario 3
 
   
