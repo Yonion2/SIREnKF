@@ -163,49 +163,15 @@ def run(gt_param, beta, gamma, task, Q_x, Q_param, P_x, P_param, R_x, N, windows
     np.save(full_path, post_states)
     np.save(full_path+'_before', prior_states)
 
-def main():
-    # 观测平均感染率，估计beta，超参数重要性倒序: windows、N、Q_x、Q_param、P_x、P_param、R_x
-    run(beta=0.1, gamma=0.002, task='beta', Q_x=1e-3, Q_param=2.5e-2, P_x=5e-4, P_param=1e-2, R_x=5e-3, N=50, windows=1, measurement_mode='infection')  # N是样本个数
-    # 观测平均感染率，估计gamma，一般window=1即可，增大可能更好，但是没试过
-    run(beta=0.005, gamma=0.1, task='gamma', Q_x=1e-3, Q_param=2.5e-2, P_x=5e-4, P_param=1e-2, R_x=5e-3, N=50, windows=10, measurement_mode='infection')
-    # # 观测平均感染率和平均移除率，估计beta和gamma, windows设置为10～50都可
-    run(beta=0.01, gamma=0.01, task='all', Q_x=1e-4, Q_param=2.5e-3, P_x=5e-4, P_param=1e-2, R_x=1e-3, N=50, windows=10, measurement_mode='both')
-    # for beta in [0.05, 0.008, 0.01, 0.012, 0.015]:
-    #     for gamma in [0.001, 0.003, 0.005, 0.008, 0.01]:
-    #         idx += 1
-    #         print('test: ', idx)
-    #         run(beta=beta, gamma=gamma, Q_x=2e-4, Q_param=1, P_x=5e-4, P_param=50, R_x=1e-4, N=64)
-    # for qx in [2e-4, 5e-4, 1e-3]:
-    #     for P_x in [2e-4, 5e-4, 1e-3]:
-    #         idx += 1
-    #         print('test: ', idx)
-    #         run(beta=0.010, gamma=0.005, Q_x=qx, Q_param=1, P_x=P_x, P_param=50, R_x=1e-4, N=64)
-    # for Q_p in [0.1, 1, 10]:
-    #     for P_p in [0.1, 1, 10]:
-    #         idx += 1
-    #         print('test: ', idx)
-    #         run(beta=0.010, gamma=0.005, Q_x=2e-4, Q_param=Q_p, P_x=5e-4, P_param=P_p, R_x=1e-4, N=64)
-    # for N in [50, 64, 100, 128, 256]:
-    #     idx += 1
-    #     print('test: ', idx)
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-4, P_x=5e-3, P_param=1e-2, R_x=5e-3, N=50) # beta, good!! gamma相对差一些
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-4, P_x=5e-4, P_param=1e-2, R_x=5e-3, N=50) # beta, good!! gamma相对差一些
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-4, P_x=5e-3, P_param=1e-2, R_x=5e-3, N=50)
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-4, P_x=5e-3, P_param=1e-2, R_x=5e-4, N=50)
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-4, P_x=5e-4, P_param=1e-2, R_x=5e-3, N=50) # 前面挺好，后边飞了。
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-3, Q_param=2.5e-3, P_x=5e-4, P_param=1e-2, R_x=5e-3, N=50) # 前面挺好，后边飞了。
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-3, P_x=5e-4, P_param=1e-2, R_x=5e-3, N=50) # 前面挺好，后边飞了。
-    # run(beta=0.1, gamma=0.1, task='all', Q_x=1e-4, Q_param=2.5e-3, P_x=5e-3, P_param=1e-2, R_x=5e-3, N=50) # 前面挺好，后边飞了。
-    # for beta in [0.01, 0.05, 0.10]:
-    #     for Q_x in [1e-4, 1e-6, 1e-8, 1e-12]:
-    #         for Q_param in [8e-5, 1e-12, 1e-6, 1e-3]:
-    #             for P_param in [4e-4, 1e-2, 1e-4, 1]:
-    #                 for P_x in [1e-3, 1e-1]:
-    #                     for R_x in [5e-8, 1e-6, 5e-4, 1e-3]:
-    #                         for N in [50, 100, 200]:
-    #                             run(beta=beta, gamma=0.001, task='beta', Q_x=Q_x, Q_param=Q_param, P_x=P_x, P_param=P_param, R_x=R_x, N=N)
-
-
 
 if __name__ == '__main__':
-    main()
+    m = 6
+    path = "./datasets/graphs/p2p-Gnutella05.txt"
+    def read_txt_direct(data):
+        g = nx.read_edgelist(data,  nodetype=int, create_using=nx.DiGraph())
+        return g
+    g = read_txt_direct(path)
+    trends = load_obj("./datasets/scen1_data/obe/trends_addedd_50beta0.005_gamma0.002_fraction0.002")
+    graph_params = {'type':'scenario1','p': 0.005, 'wk': 5, 'wp': 0.001, 'd':50, 'n_nodes': 8846, 'm':m}
+    gt_param = {'graph': g, 'beta_gt':0.005, 'gamma_gt':0.002, 'Is':0.002, 'gts': trends, 'n_nodes':8846, 'save_dir':'./paper_data/case1/result'}
+    run(gt_param, beta = 0.01, gamma = 0.01, task= 'both', Q_x = 1e-4, Q_param = 1e-4, P_x = 5e-4, P_param = 1e-2, R_x= 5e-3, N = 50, windows = 10, rounds = 3000, measurement_mode='both')
